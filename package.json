@@ -1,0 +1,18 @@
+{
+  "name": "amazonapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.1",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6",
+    "nodemon": "^2.0.7"
+  }
+}
