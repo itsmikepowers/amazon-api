@@ -13,6 +13,11 @@ app.get('/', async (req, res) => {
   res.send('Welcome to Amazon Scraper API!');
 });
 
+// Ping route for Rapid API
+app.get('/ping', (req, res) => {
+  res.status(200).json({ status: 'success', message: 'API is healthy' });
+});
+
 // Get product details
 app.get('/products/:productId', async (req, res) => {
   const { productId } = req.params;
