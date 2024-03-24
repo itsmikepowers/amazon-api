@@ -62,4 +62,14 @@ app.get('/search/:searchQuery', async (req, res) => {
   }
 });
 
+app.get('/linkedin', async (req, res) => {
+  const profileUrl = 'https://www.linkedin.com/in/itsmikepowers/';
+  try {
+    const response = await request(`${returnScraperApiUrl()}&url=${profileUrl}`);
+    res.json(JSON.parse(response));
+  } catch (error) {
+    res.json(error);
+  }
+});
+
 app.listen(PORT, () => console.log(`Server Running on Port: ${PORT}`));
