@@ -62,36 +62,4 @@ app.get('/search/:searchQuery', async (req, res) => {
   }
 });
 
-app.get('/linkedin', async (req, res) => {
-  const profileUrl = 'https://www.linkedin.com/in/itsmikepowers/';
-  try {
-    const response = await request(`${returnScraperApiUrl()}&url=${profileUrl}`);
-    res.json(JSON.parse(response));
-  } catch (error) {
-    res.json(error);
-  }
-});
-
-// Indeed job search endpoint
-app.get('/indeed', async (req, res) => {
-  const searchUrl = 'https://www.indeed.com/jobs?q=Java&sc=0kf%3Ajt%28contract%29%3B&vjk=1b93328edf307cda';
-  try {
-    const response = await request(`${returnScraperApiUrl()}&url=${searchUrl}&autoparse=true`);
-    res.json(JSON.parse(response));
-  } catch (error) {
-    res.json(error);
-  }
-});
-
-// Walmart job search endpoint
-app.get('/walmart', async (req, res) => {
-  const searchUrl = 'https://www.walmart.com/search?q=tv';
-  try {
-    const response = await request(`${returnScraperApiUrl()}&url=${searchUrl}`);
-    res.json(JSON.parse(response));
-  } catch (error) {
-    res.json(error);
-  }
-});
-
 app.listen(PORT, () => console.log(`Server Running on Port: ${PORT}`));
