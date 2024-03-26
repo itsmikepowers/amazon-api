@@ -76,7 +76,7 @@ app.get('/linkedin', async (req, res) => {
 app.get('/indeed', async (req, res) => {
   const searchUrl = 'https://www.indeed.com/jobs?q=Java&sc=0kf%3Ajt%28contract%29%3B&vjk=1b93328edf307cda';
   try {
-    const response = await request(`${returnScraperApiUrl()}&url=${searchUrl}`);
+    const response = await request(`${returnScraperApiUrl()}&url=${searchUrl}&autoparse=true`);
     res.json(JSON.parse(response));
   } catch (error) {
     res.json(error);
