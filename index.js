@@ -62,4 +62,44 @@ app.get('/search/:searchQuery', async (req, res) => {
   }
 });
 
+// Indeed job search endpoint
+app.get('/indeed', async (req, res) => {
+  const searchUrl = 'https://www.indeed.com/jobs?q=Java&sc=0kf%3Ajt%28contract%29%3B&vjk=1b93328edf307cda';
+
+  try {
+    // Submit an async job to scrape the Indeed search results
+    const { data: jobData } = await axios({
+      data: {
+        apiKey: API_KEY,
+        url: searchUrl,
+      },
+      headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+      url: 'https://async.scraperapi.com/jobs',
+    });
+
+    const jobId = jobData.id;
+    const statusUrl = jobData.statusUrl;
+
+    // Poll the status URL until the job is finished
+    let jobStatus = 'running';
+    while (jobStatus === 'running') {
+      const { data: statusData } = await axios.get(statusUrl);
+      jobStatus = statusData.status;
+
+      if (jobStatus === 'finished') {
+        // Job is finished, retrieve the HTML response
+        const html = statusData.response.body;
+        res.send(html);
+        break;
+      } else {
+        // Job is still running, wait for a short interval before polling again
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+      }
+    }
+  } catch (error) {
+    res.json(error);
+  }
+});
+
 app.listen(PORT, () => console.log(`Server Running on Port: ${PORT}`));
