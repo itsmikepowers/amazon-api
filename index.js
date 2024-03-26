@@ -83,4 +83,15 @@ app.get('/indeed', async (req, res) => {
   }
 });
 
+// Walmart job search endpoint
+app.get('/walmart', async (req, res) => {
+  const searchUrl = 'https://www.walmart.com/search?q=tv';
+  try {
+    const response = await request(`${returnScraperApiUrl()}&url=${searchUrl}`);
+    res.json(JSON.parse(response));
+  } catch (error) {
+    res.json(error);
+  }
+});
+
 app.listen(PORT, () => console.log(`Server Running on Port: ${PORT}`));
