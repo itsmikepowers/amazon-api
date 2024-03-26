@@ -1,11 +1,11 @@
 const express = require('express');
 const request = require('request-promise');
+
 const PORT = process.env.PORT || 4000;
 const app = express();
 app.use(express.json());
 
 const API_KEY = '5db8cc3726e79e74070f315c73cd5e38';
-
 const returnScraperApiUrl = () => `http://api.scraperapi.com?api_key=${API_KEY}&autoparse=true`;
 
 // Welcome route
@@ -66,6 +66,17 @@ app.get('/linkedin', async (req, res) => {
   const profileUrl = 'https://www.linkedin.com/in/itsmikepowers/';
   try {
     const response = await request(`${returnScraperApiUrl()}&url=${profileUrl}`);
+    res.json(JSON.parse(response));
+  } catch (error) {
+    res.json(error);
+  }
+});
+
+// Indeed job search endpoint
+app.get('/indeed', async (req, res) => {
+  const searchUrl = 'https://www.indeed.com/jobs?q=Java&sc=0kf%3Ajt%28contract%29%3B&vjk=1b93328edf307cda';
+  try {
+    const response = await request(`${returnScraperApiUrl()}&url=${searchUrl}`);
     res.json(JSON.parse(response));
   } catch (error) {
     res.json(error);
